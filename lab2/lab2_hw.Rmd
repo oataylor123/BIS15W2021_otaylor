@@ -109,6 +109,6 @@ sd(Steve)
 Susan <- spring_data_matrix[ ,3]
 sd(Susan)
 ```
-Susan has the most precise results. 
+Steve has the most precise results. 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  
