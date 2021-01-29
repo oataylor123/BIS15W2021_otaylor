@@ -3,9 +3,9 @@ title: "Lab 2 Homework"
 author: "Olivia Taylor"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ## Instructions
@@ -109,6 +109,6 @@ sd(Steve)
 Susan <- spring_data_matrix[ ,3]
 sd(Susan)
 ```
-Steve has the most precise results. 
+Susan has the most precise results. 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  
