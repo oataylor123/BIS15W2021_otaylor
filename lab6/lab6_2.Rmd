@@ -2,10 +2,11 @@
 title: "summarize practice, `count()`, `across()`"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
     toc: yes
     toc_float: yes
+    keep_md: yes
   pdf_document:
     toc: yes
 ---
@@ -70,7 +71,8 @@ Although these summary functions are super helpful, oftentimes we are mostly int
 `count()` is an easy way of determining how many observations you have within a column. It acts like a combination of `group_by()` and `n()`.
 ```{r}
 penguins %>% 
-  count(island, sort = T) #sort=T sorts the column in descending order
+  count(island, sort = T) %>%
+   #sort=T sorts the column in descending order, count is the same as group_by and summarise, but basically shorter
 ```
 
 Compare this with `summarize()` and `group_by()`.
@@ -100,20 +102,31 @@ penguins %>%
   adorn_ns()
 ```
 
+
 ## Practice
 1. Produce a summary of the mean for bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g within Adelie penguins only. Be sure to provide the number of samples.
 ```{r}
-
+penguins %>%
+  filter(!is.na(bill_length_mm)) %>%
+  summarise(mean_bill_length_mm = mean(bill_length_mm),
+            mean_bill_depth_mm = mean(bill_depth_mm),
+            mean_body_mass_g = mean(body_mass_g, na.rm = T))
+            n=n())
 ```
 
 2. How does the mean of `bill_length_mm` compare between penguin species?
 ```{r}
-
+penguins %>%
+  group_by %>%
+  summarize(mean_bill_length_mm = mean(bill_length_mm, na.rm = T)
 ```
 
 3. For some penguins, their sex is listed as NA. Where do these penguins occur?
 ```{r}
-
+penguins %>%
+  group_by(sex, species, island) %>%
+  summarise(number_NAs=sum(is.na(sex)))%>%
+  arrange(desc())
 ```
 
 ## `across()`
@@ -155,7 +168,7 @@ penguins %>%
 Operators can also work, here I am summarizing `n_distinct()` across all variables except `species`, `island`, and `sex`.
 ```{r}
 penguins %>%
-  summarise(across(!c(species, island, sex), 
+  summarise(across(!c(species, island, sex, bill_depth_mm, year), 
                    n_distinct))
 ```
 
