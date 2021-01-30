@@ -173,6 +173,12 @@ gabon %>%
   group_by(distance<5) %>% 
   summarize(across(c(ra_apes, ra_monkeys, ra_elephant, ra_rodent, ra_ungulate),mean))
 ```
+```{r}
+gabon %>%
+  filter(distance <5 | distance > 20)%>%
+  group_by(distance<5) %>% 
+  summarise(across(contains("ra"), mean, na.rm=TRUE))
+```
 
 **12. (4 points) Based on your interest, do one exploratory analysis on the `gabon` data of your choice. This analysis needs to include a minimum of two functions in `dplyr.`** How does land use affect the relative abundance of birds? 
 ```{r}
