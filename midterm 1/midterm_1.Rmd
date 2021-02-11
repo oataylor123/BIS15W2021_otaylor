@@ -69,9 +69,7 @@ elephants$sex <- as.factor(elephants$sex)
 class(elephants$sex)
 ```
 
-
-
-**5. (2 points) How many male and female elephants are represented in the data?** There are 150 females and 150 males.
+**5. (2 points) How many male and female elephants are represented in the data?** There are 150 females and 138 males.
 ```{r}
 nrow(elephants %>% 
        select(sex) %>% 
@@ -79,6 +77,11 @@ nrow(elephants %>%
 nrow(elephants %>% 
         select(sex) %>% 
         filter(sex == "M"))
+```
+
+_Aside from a small typo, this is correct but consider using count._
+```{r}
+elephants %>% count(sex)
 ```
 
 **6. (2 points) What is the average age all elephants in the data?** Almost 11 years old. 

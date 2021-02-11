@@ -1,7 +1,7 @@
 ---
 title: "Midterm 1"
 author: "Olivia Taylor"
-date: "2021-01-28"
+date: "2021-02-09"
 output:
   html_document: 
     theme: spacelab
@@ -124,9 +124,7 @@ class(elephants$sex)
 ## [1] "factor"
 ```
 
-
-
-**5. (2 points) How many male and female elephants are represented in the data?** There are 150 females and 150 males.
+**5. (2 points) How many male and female elephants are represented in the data?** There are 150 females and 138 males.
 
 ```r
 nrow(elephants %>% 
@@ -146,6 +144,20 @@ nrow(elephants %>%
 
 ```
 ## [1] 138
+```
+
+_Aside from a small typo, this is correct but consider using count._
+
+```r
+elephants %>% count(sex)
+```
+
+```
+## # A tibble: 2 x 2
+##   sex       n
+## * <fct> <int>
+## 1 F       150
+## 2 M       138
 ```
 
 **6. (2 points) What is the average age all elephants in the data?** Almost 11 years old. 
@@ -352,13 +364,9 @@ gabon %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
 ## # A tibble: 2 x 4
 ##   hunt_cat mean_mammal_diversity mean_bird_diversity total
-##   <fct>                    <dbl>               <dbl> <int>
+## * <fct>                    <dbl>               <dbl> <int>
 ## 1 High                      1.74                1.66     7
 ## 2 Moderate                  1.68                1.62     8
 ```
@@ -372,15 +380,27 @@ gabon %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
+## # A tibble: 2 x 6
+##   `distance < 5` ra_apes ra_monkeys ra_elephant ra_rodent ra_ungulate
+## * <lgl>            <dbl>      <dbl>       <dbl>     <dbl>       <dbl>
+## 1 FALSE             7.21       40.1      0.557       2.68        4.98
+## 2 TRUE              0.08       24.1      0.0967      3.66        1.59
+```
+
+```r
+gabon %>%
+  filter(distance <5 | distance > 20)%>%
+  group_by(distance<5) %>% 
+  summarise(across(contains("ra"), mean, na.rm=TRUE))
 ```
 
 ```
-## # A tibble: 2 x 6
-##   `distance < 5` ra_apes ra_monkeys ra_elephant ra_rodent ra_ungulate
-##   <lgl>            <dbl>      <dbl>       <dbl>     <dbl>       <dbl>
-## 1 FALSE             7.21       40.1      0.557       2.68        4.98
-## 2 TRUE              0.08       24.1      0.0967      3.66        1.59
+## # A tibble: 2 x 8
+##   `distance < 5` transect_id ra_apes ra_birds ra_elephant ra_monkeys ra_rodent
+## * <lgl>                <dbl>   <dbl>    <dbl>       <dbl>      <dbl>     <dbl>
+## 1 FALSE                 11      7.21     44.5      0.557        40.1      2.68
+## 2 TRUE                  19.7    0.08     70.4      0.0967       24.1      3.66
+## # … with 1 more variable: ra_ungulate <dbl>
 ```
 
 **12. (4 points) Based on your interest, do one exploratory analysis on the `gabon` data of your choice. This analysis needs to include a minimum of two functions in `dplyr.`** How does land use affect the relative abundance of birds? 
@@ -393,13 +413,9 @@ gabon %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
 ## # A tibble: 3 x 4
 ##   land_use mean_ra_birds sd_ra_birds     n
-##   <fct>            <dbl>       <dbl> <int>
+## * <fct>            <dbl>       <dbl> <int>
 ## 1 Logging           62.7       12.3     13
 ## 2 Neither           71.0       11.3      4
 ## 3 Park              44.0        8.61     7
