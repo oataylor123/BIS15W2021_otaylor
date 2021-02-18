@@ -1,7 +1,7 @@
 ---
 title: "Lab 11 Homework"
 author: "Olivia Taylor"
-date: "2021-02-16"
+date: "2021-02-17"
 output:
   html_document: 
     theme: spacelab
@@ -53,12 +53,12 @@ glimpse(gapminder_tidy)
 ```
 ## Rows: 1,704
 ## Columns: 6
-## $ country    <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghan…
-## $ continent  <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia…
-## $ year       <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997…
-## $ life_exp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40…
-## $ pop        <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, …
-## $ gdp_percap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134…
+## $ country    <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgh...
+## $ continent  <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, As...
+## $ year       <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 19...
+## $ life_exp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, ...
+## $ pop        <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372...
+## $ gdp_percap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.11...
 ```
 
 ```r
@@ -84,10 +84,6 @@ gapminder_tidy %>%
   group_by(year) %>% 
   summarize(mean_life_exp=mean(life_exp)) %>% 
   arrange(year)
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
 ```
 
 ```
@@ -127,10 +123,6 @@ gapminder_tidy %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
@@ -149,13 +141,9 @@ gapminder_tidy %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
 ## # A tibble: 2 x 4
 ##   year  median_life_exp min_life_exp max_life_exp
-##   <fct>           <dbl>        <dbl>        <dbl>
+## * <fct>           <dbl>        <dbl>        <dbl>
 ## 1 1952             45.1         28.8         72.7
 ## 2 2007             71.9         39.6         82.6
 ```
@@ -185,7 +173,7 @@ gapminder_tidy %>%
 ```
 
 ```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
+## `summarise()` has grouped output by 'continent'. You can override using the `.groups` argument.
 ```
 
 ```
@@ -203,7 +191,7 @@ gapminder_tidy %>%
 ##  8 Africa    1987             51.6         39.9         71.9
 ##  9 Africa    1992             52.4         23.6         73.6
 ## 10 Africa    1997             52.8         36.1         74.8
-## # … with 50 more rows
+## # ... with 50 more rows
 ```
 
 
@@ -227,7 +215,7 @@ gapminder_tidy %>%
 ```
 
 ```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
+## `summarise()` has grouped output by 'continent'. You can override using the `.groups` argument.
 ```
 
 ```
@@ -245,7 +233,7 @@ gapminder_tidy %>%
 ##  8 Africa    1987           53.3
 ##  9 Africa    1992           53.6
 ## 10 Africa    1997           53.6
-## # … with 50 more rows
+## # ... with 50 more rows
 ```
 
 
@@ -262,7 +250,7 @@ gapminder_tidy %>%
 ```
 
 ```
-## `summarise()` regrouping output by 'continent' (override with `.groups` argument)
+## `summarise()` has grouped output by 'continent'. You can override using the `.groups` argument.
 ```
 
 ![](lab11_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
@@ -312,7 +300,7 @@ gapminder_tidy_growth
 ##  8 Nigeria       Africa    2007      46.9  135031164      2014.  101912068
 ##  9 Mexico        Americas  2007      76.2  108700891     11978.   78556574
 ## 10 Philippines   Asia      2007      71.7   91077287      3190.   68638596
-## # … with 274 more rows
+## # ... with 274 more rows
 ```
 The three countries that have seen the most growth are China, India, and the Untied States. 
 **8. Use your results from the question above to plot population growth for the top five countries since 1952.**
