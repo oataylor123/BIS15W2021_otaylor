@@ -1,7 +1,7 @@
 ---
 title: "Lab 10 Homework"
 author: "Olivia Taylor"
-date: "2021-02-11"
+date: "2021-02-18"
 output:
   html_document: 
     theme: spacelab
@@ -24,6 +24,11 @@ library(here)
 library(naniar)
 ```
 
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
 ## Desert Ecology
 For this assignment, we are going to use a modified data set on [desert ecology](http://esapubs.org/archive/ecol/E090/118/). The data are from: S. K. Morgan Ernest, Thomas J. Valone, and James H. Brown. 2009. Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology 90:1708.
 
@@ -33,7 +38,7 @@ deserts <- read_csv(here("lab10", "data", "surveys_complete.csv"))
 
 ```
 ## 
-## ── Column specification ────────────────────────────────────────────────────────
+## -- Column specification --------------------------------------------------------
 ## cols(
 ##   record_id = col_double(),
 ##   month = col_double(),
@@ -50,6 +55,9 @@ deserts <- read_csv(here("lab10", "data", "surveys_complete.csv"))
 ##   plot_type = col_character()
 ## )
 ```
+# missing data in repository
+
+</div>
 
 1. Use the function(s) of your choice to get an idea of its structure, including how NA's are treated. Are the data tidy?  
 
@@ -60,19 +68,19 @@ glimpse(deserts)
 ```
 ## Rows: 34,786
 ## Columns: 13
-## $ record_id       <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16…
-## $ month           <dbl> 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,…
-## $ day             <dbl> 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1…
-## $ year            <dbl> 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1977,…
-## $ plot_id         <dbl> 2, 3, 2, 7, 3, 1, 2, 1, 1, 6, 5, 7, 3, 8, 6, 4, 3, 2,…
-## $ species_id      <chr> "NL", "NL", "DM", "DM", "DM", "PF", "PE", "DM", "DM",…
-## $ sex             <chr> "M", "M", "F", "M", "M", "M", "F", "M", "F", "F", "F"…
-## $ hindfoot_length <dbl> 32, 33, 37, 36, 35, 14, NA, 37, 34, 20, 53, 38, 35, N…
-## $ weight          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-## $ genus           <chr> "Neotoma", "Neotoma", "Dipodomys", "Dipodomys", "Dipo…
-## $ species         <chr> "albigula", "albigula", "merriami", "merriami", "merr…
-## $ taxa            <chr> "Rodent", "Rodent", "Rodent", "Rodent", "Rodent", "Ro…
-## $ plot_type       <chr> "Control", "Long-term Krat Exclosure", "Control", "Ro…
+## $ record_id       <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ...
+## $ month           <dbl> 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, ...
+## $ day             <dbl> 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,...
+## $ year            <dbl> 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1977, 197...
+## $ plot_id         <dbl> 2, 3, 2, 7, 3, 1, 2, 1, 1, 6, 5, 7, 3, 8, 6, 4, 3, ...
+## $ species_id      <chr> "NL", "NL", "DM", "DM", "DM", "PF", "PE", "DM", "DM...
+## $ sex             <chr> "M", "M", "F", "M", "M", "M", "F", "M", "F", "F", "...
+## $ hindfoot_length <dbl> 32, 33, 37, 36, 35, 14, NA, 37, 34, 20, 53, 38, 35,...
+## $ weight          <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,...
+## $ genus           <chr> "Neotoma", "Neotoma", "Dipodomys", "Dipodomys", "Di...
+## $ species         <chr> "albigula", "albigula", "merriami", "merriami", "me...
+## $ taxa            <chr> "Rodent", "Rodent", "Rodent", "Rodent", "Rodent", "...
+## $ plot_type       <chr> "Control", "Long-term Krat Exclosure", "Control", "...
 ```
 
 ```r
@@ -85,6 +93,10 @@ names(deserts)
 ##  [9] "weight"          "genus"           "species"         "taxa"           
 ## [13] "plot_type"
 ```
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
 2. How many genera and species are represented in the data? What are the total number of observations? Which species is most/ least frequently sampled in the study?
 
@@ -107,7 +119,7 @@ deserts %>%
 ##  8 Ammospermophilus   437
 ##  9 Amphispiza         303
 ## 10 Spermophilus       249
-## # … with 16 more rows
+## # ... with 16 more rows
 ```
 
 ```r
@@ -129,8 +141,9 @@ deserts %>%
 ##  8 flavus        1597
 ##  9 eremicus      1299
 ## 10 albigula      1252
-## # … with 30 more rows
+## # ... with 30 more rows
 ```
+</div>
 
 
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
@@ -232,10 +245,6 @@ deserts %>%
 ```
 
 ```
-## `summarise()` ungrouping output (override with `.groups` argument)
-```
-
-```
 ## # A tibble: 25 x 2
 ##    species_id mean_weight
 ##    <chr>            <dbl>
@@ -249,7 +258,7 @@ deserts %>%
 ##  8 DM                43.2
 ##  9 PB                31.7
 ## 10 OL                31.6
-## # … with 15 more rows
+## # ... with 15 more rows
 ```
 
 ```r
@@ -268,8 +277,13 @@ deserts %>%
 ```
 
 ![](lab10_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
 
+</div>
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
