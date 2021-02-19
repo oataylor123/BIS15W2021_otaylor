@@ -42,6 +42,10 @@ https://doi.org/10.1038/sdata.2017.123).
 ```{r}
 amphibio <- readr::read_csv("data/amphibio.csv")
 ```
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
 ## Questions  
 **2. Do some exploratory analysis of the `amniota` data set. Use the function(s) of your choice. Try to get an idea of how NA's are represented in the data.**  
@@ -54,6 +58,8 @@ is.na(amniota)
 amniota %>% 
   summarize_all(~(sum(is.na(.))))
 ```
+</div>
+
 **3. Do some exploratory analysis of the `amphibio` data set. Use the function(s) of your choice. Try to get an idea of how NA's are represented in the data.**  
 
 ```{r}
