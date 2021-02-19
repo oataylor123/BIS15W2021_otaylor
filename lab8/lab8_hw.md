@@ -1,7 +1,7 @@
 ---
 title: "Lab 8 Homework"
 author: "Olivia Taylor"
-date: "2021-02-09"
+date: "2021-02-18"
 output:
   html_document: 
     theme: spacelab
@@ -40,7 +40,7 @@ sydney_beaches <- readr::read_csv(here("lab8", "data", "sydneybeaches.csv")) %>%
 
 ```
 ## 
-## ── Column specification ────────────────────────────────────────────────────────
+## -- Column specification --------------------------------------------------------
 ## cols(
 ##   BeachId = col_double(),
 ##   Region = col_character(),
@@ -59,19 +59,19 @@ sydney_beaches
 
 ```
 ## # A tibble: 3,690 x 8
-##    beach_id region    council   site   longitude latitude date  enterococci_cfu…
+##    beach_id region    council   site   longitude latitude date  enterococci_cfu~
 ##       <dbl> <chr>     <chr>     <chr>      <dbl>    <dbl> <chr>            <dbl>
-##  1       25 Sydney C… Randwick… Clove…      151.    -33.9 02/0…               19
-##  2       25 Sydney C… Randwick… Clove…      151.    -33.9 06/0…                3
-##  3       25 Sydney C… Randwick… Clove…      151.    -33.9 12/0…                2
-##  4       25 Sydney C… Randwick… Clove…      151.    -33.9 18/0…               13
-##  5       25 Sydney C… Randwick… Clove…      151.    -33.9 30/0…                8
-##  6       25 Sydney C… Randwick… Clove…      151.    -33.9 05/0…                7
-##  7       25 Sydney C… Randwick… Clove…      151.    -33.9 11/0…               11
-##  8       25 Sydney C… Randwick… Clove…      151.    -33.9 23/0…               97
-##  9       25 Sydney C… Randwick… Clove…      151.    -33.9 07/0…                3
-## 10       25 Sydney C… Randwick… Clove…      151.    -33.9 25/0…                0
-## # … with 3,680 more rows
+##  1       25 Sydney C~ Randwick~ Clove~      151.    -33.9 02/0~               19
+##  2       25 Sydney C~ Randwick~ Clove~      151.    -33.9 06/0~                3
+##  3       25 Sydney C~ Randwick~ Clove~      151.    -33.9 12/0~                2
+##  4       25 Sydney C~ Randwick~ Clove~      151.    -33.9 18/0~               13
+##  5       25 Sydney C~ Randwick~ Clove~      151.    -33.9 30/0~                8
+##  6       25 Sydney C~ Randwick~ Clove~      151.    -33.9 05/0~                7
+##  7       25 Sydney C~ Randwick~ Clove~      151.    -33.9 11/0~               11
+##  8       25 Sydney C~ Randwick~ Clove~      151.    -33.9 23/0~               97
+##  9       25 Sydney C~ Randwick~ Clove~      151.    -33.9 07/0~                3
+## 10       25 Sydney C~ Randwick~ Clove~      151.    -33.9 25/0~                0
+## # ... with 3,680 more rows
 ```
 
 
@@ -87,6 +87,24 @@ Yes, they are tidy; they are in long format and each variable is on its own and 
 sydneybeaches_long <- 
   sydney_beaches %>% 
   select(site, date, enterococci_cfu_100ml)
+sydneybeaches_long
+```
+
+```
+## # A tibble: 3,690 x 3
+##    site           date       enterococci_cfu_100ml
+##    <chr>          <chr>                      <dbl>
+##  1 Clovelly Beach 02/01/2013                    19
+##  2 Clovelly Beach 06/01/2013                     3
+##  3 Clovelly Beach 12/01/2013                     2
+##  4 Clovelly Beach 18/01/2013                    13
+##  5 Clovelly Beach 30/01/2013                     8
+##  6 Clovelly Beach 05/02/2013                     7
+##  7 Clovelly Beach 11/02/2013                    11
+##  8 Clovelly Beach 23/02/2013                    97
+##  9 Clovelly Beach 07/03/2013                     3
+## 10 Clovelly Beach 25/03/2013                     0
+## # ... with 3,680 more rows
 ```
 
 
@@ -105,18 +123,18 @@ sydneybeaches_wide
 ## # A tibble: 11 x 345
 ##    site  `02/01/2013` `06/01/2013` `12/01/2013` `18/01/2013` `30/01/2013`
 ##    <chr>        <dbl>        <dbl>        <dbl>        <dbl>        <dbl>
-##  1 Clov…           19            3            2           13            8
-##  2 Coog…           15            4           17           18           22
-##  3 Gord…           NA           NA           NA           NA           NA
-##  4 Litt…            9            3           72            1           44
-##  5 Mala…            2            4          390           15           13
-##  6 Maro…            1            1           20            2           11
-##  7 Sout…            1            0           33            2           13
-##  8 Sout…           12            2          110           13          100
-##  9 Bond…            3            1            2            1            6
-## 10 Bron…            4            2           38            3           25
-## 11 Tama…            1            0            7           22           23
-## # … with 339 more variables: `05/02/2013` <dbl>, `11/02/2013` <dbl>,
+##  1 Clov~           19            3            2           13            8
+##  2 Coog~           15            4           17           18           22
+##  3 Gord~           NA           NA           NA           NA           NA
+##  4 Litt~            9            3           72            1           44
+##  5 Mala~            2            4          390           15           13
+##  6 Maro~            1            1           20            2           11
+##  7 Sout~            1            0           33            2           13
+##  8 Sout~           12            2          110           13          100
+##  9 Bond~            3            1            2            1            6
+## 10 Bron~            4            2           38            3           25
+## 11 Tama~            1            0            7           22           23
+## # ... with 339 more variables: `05/02/2013` <dbl>, `11/02/2013` <dbl>,
 ## #   `23/02/2013` <dbl>, `07/03/2013` <dbl>, `25/03/2013` <dbl>,
 ## #   `02/04/2013` <dbl>, `12/04/2013` <dbl>, `18/04/2013` <dbl>,
 ## #   `24/04/2013` <dbl>, `01/05/2013` <dbl>, `20/05/2013` <dbl>,
@@ -149,7 +167,7 @@ sydneybeaches_wide
 ## #   `29/03/2014` <dbl>, `22/04/2014` <dbl>, `14/04/2014` <dbl>,
 ## #   `30/04/2014` <dbl>, `12/05/2014` <dbl>, `28/05/2014` <dbl>,
 ## #   `03/06/2014` <dbl>, `19/06/2014` <dbl>, `03/07/2014` <dbl>,
-## #   `18/07/2014` <dbl>, `01/08/2014` <dbl>, …
+## #   `18/07/2014` <dbl>, `01/08/2014` <dbl>, ...
 ```
 
 
@@ -179,7 +197,7 @@ sydneybeaches_long_2
 ##  8 Clovelly Beach 23/02/2013                    97
 ##  9 Clovelly Beach 07/03/2013                     3
 ## 10 Clovelly Beach 25/03/2013                     0
-## # … with 3,774 more rows
+## # ... with 3,774 more rows
 ```
 
 
@@ -205,7 +223,7 @@ sydneybeaches_long %>%
 ##  8 Clovelly Beach 23    02    2013                     97
 ##  9 Clovelly Beach 07    03    2013                      3
 ## 10 Clovelly Beach 25    03    2013                      0
-## # … with 3,680 more rows
+## # ... with 3,680 more rows
 ```
 
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
@@ -220,7 +238,7 @@ mean_enterococci_long <-
 ```
 
 ```
-## `summarise()` regrouping output by 'site' (override with `.groups` argument)
+## `summarise()` has grouped output by 'site'. You can override using the `.groups` argument.
 ```
 
 ```r
@@ -242,7 +260,7 @@ mean_enterococci_long
 ##  8 Bronte Beach 2014                        17.5
 ##  9 Bronte Beach 2015                        23.6
 ## 10 Bronte Beach 2016                        61.3
-## # … with 56 more rows
+## # ... with 56 more rows
 ```
 
 
