@@ -25,11 +25,19 @@ library(here)
 library(naniar)
 ``` 
 
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
 ## Desert Ecology
 For this assignment, we are going to use a modified data set on [desert ecology](http://esapubs.org/archive/ecol/E090/118/). The data are from: S. K. Morgan Ernest, Thomas J. Valone, and James H. Brown. 2009. Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology 90:1708.
 ```{r}
 deserts <- read_csv(here("lab10", "data", "surveys_complete.csv"))
 ```
+# missing data in repository
+
+</div>
 
 1. Use the function(s) of your choice to get an idea of its structure, including how NA's are treated. Are the data tidy?  
 ```{r}
@@ -38,6 +46,10 @@ glimpse(deserts)
 ```{r}
 names(deserts)
 ```
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
 2. How many genera and species are represented in the data? What are the total number of observations? Which species is most/ least frequently sampled in the study?
 ```{r}
@@ -48,6 +60,7 @@ deserts %>%
 deserts %>% 
   count(species, sort=T)
 ```
+</div>
 
 
 3. What is the proportion of taxa included in this study? Show a table and plot that reflects this count.
@@ -127,8 +140,13 @@ deserts %>%
        x = "Species",
        fill= "Weight to Hindfoot Ratio")
 ```
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
 10. Make one plot of your choice! Make sure to include at least two of the aesthetics options you have learned.
 
+</div>
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 

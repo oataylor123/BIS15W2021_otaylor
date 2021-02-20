@@ -51,6 +51,7 @@ Yes, they are tidy; they are in long format and each variable is on its own and 
 sydneybeaches_long <- 
   sydney_beaches %>% 
   select(site, date, enterococci_cfu_100ml)
+sydneybeaches_long
 ```
 
 
