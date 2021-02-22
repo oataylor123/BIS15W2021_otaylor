@@ -1,0 +1,266 @@
+---
+title: "Midterm 2"
+author: "Olivia Taylor"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    theme: spacelab
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to your repository. Your code should be organized, clean, and run free from errors. Be sure to **add your name** to the author header above. You may use any resources to answer these questions (including each other), but you may not post questions to Open Stacks or external help sites. There are 10 total questions.  
+
+Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! Your plots should use consistent aesthetics throughout. Feel free to be creative- there are many possible solutions to these questions!  
+
+This exam is due by **12:00p on Tuesday, February 23**.  
+
+## Load the libraries
+```{r}
+library(tidyverse)
+library(janitor)
+library(here)
+options(scipen=999) #disables scientific notation when printing
+```
+
+## Gapminder
+For this assignment, we are going to use data from  [gapminder](https://www.gapminder.org/). Gapminder includes information about economics, population, social issues, and life expectancy from countries all over the world. We will use three data sets, so please load all three.  
+
+One thing to note is that the data include years beyond 2021. These are projections based on modeling done by the gapminder organization. Start by importing the data.
+
+```{r}
+population <- read_csv(here("midterm2", "data", "population_total.csv"))
+population
+```
+
+
+```{r}
+income <- read_csv(here("midterm2", "data", "income_per_person_gdppercapita_ppp_inflation_adjusted.csv"))
+income
+```
+
+```{r}
+life_expectancy <- read_csv(here("midterm2", "data", "life_expectancy_years.csv"))
+life_expectancy
+```
+1. 
+
+```{r}
+population_tidy <- population %>% 
+  pivot_longer(-country,
+               names_to="year",
+               values_to="pop_size")
+population_tidy
+```
+
+
+```{r}
+naniar::miss_var_summary(population_tidy)
+```
+
+```{r}
+income_tidy <- income %>% 
+  pivot_longer(-country,
+               names_to="year",
+               values_to="dollars")
+income_tidy
+```
+
+
+```{r}
+naniar::miss_var_summary(income_tidy)
+```
+```{r}
+life_expectancy_tidy <- life_expectancy %>% 
+  pivot_longer(-country,
+               names_to="year",
+               values_to="life_exp")
+life_expectancy_tidy
+```
+
+2. (1 point) How many different countries are represented in the data? Provide the total number and their names. Since each data set includes different numbers of countries, you will need to do this for each one.
+```{r}
+population_tidy %>% 
+  count(country, sort=T)
+```
+Population data has 195 countries.
+```{r}
+income_tidy %>% 
+  count(country, sort =T, na.rm=T)
+```
+Income data has 193 countries.
+```{r}
+life_expectancy_tidy %>% 
+  count(country, sort=T, na.rm=T)
+```
+Life expectancy data has 187 countries. 
+## Life Expectancy  
+
+3. (2 points) Let's limit the data to the past 100 years (1920-2020). For these years, which country has the highest life expectancy? How about the lowest life expectancy?  
+Highest: Sweden
+```{r}
+life_expectancy_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>% 
+  mutate(mean_life_exp = mean(life_exp)) %>% 
+  arrange(desc(mean_life_exp))
+```
+
+
+Lowest: Central African Republic
+```{r}
+life_expectancy_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>% 
+  mutate(mean_life_exp = mean(life_exp)) %>% 
+  arrange(mean_life_exp)
+```
+4. (3 points) Although we can see which country has the highest life expectancy for the past 100 years, we don't know which countries have changed the most. What are the top 5 countries that have experienced the biggest improvement in life expectancy between 1920-2020? 
+```{r}
+life_exp_diff_tidy <- life_expectancy_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>% 
+  summarize(life_exp_1920 = mean(life_exp[year == "1920"]),
+            life_exp_2020 = mean(life_exp[year == "2020"])) %>% 
+  mutate(life_exp_diff = life_exp_2020-life_exp_1920) %>% 
+  top_n(5) %>% 
+  arrange(desc(life_exp_diff))
+life_exp_diff_tidy
+```
+Kuwait, Kyrgyz Republic, Turkmenistan, South Korea, and Tajikstan.
+
+5. (3 points) Make a plot that shows the change over the past 100 years for the country with the biggest improvement in life expectancy. Be sure to add appropriate aesthetics to make the plot clean and clear. Once you have made the plot, do a little internet searching and see if you can discover what historical event may have contributed to this remarkable change.  
+
+```{r}
+life_expectancy_tidy %>% 
+  filter(country == "Kuwait") %>%
+  filter(between(year, 1920, 2020)) %>% 
+  ggplot(aes(x=year, y=life_exp, color=country))+
+  geom_line(aes(group=1))+
+  scale_x_discrete(breaks=c("1920","1945","1970","1995","2020"),
+        labels=c("1920","1945","1970","1995","2020"))+
+  theme(legend.position = "none")+
+  theme(axis.text.x = element_text(hjust = 1))+
+  theme(axis.text.x = element_text(hjust = 0.5))+
+  geom_smooth(method="lm", se=FALSE, color="blue")+
+  labs(title="Kuwait Average Life Expectancy 1920-2020",
+       y="Average Life Expectancy",
+       x="Year")
+  
+```
+
+## Population Growth
+6. (3 points) Which 5 countries have had the highest population growth over the past 100 years (1920-2020)?
+```{r}
+population_growth_tidy <- population_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>% 
+  summarize(pop_size_1920 = mean(pop_size[year == "1920"]),
+            pop_size_2020 = mean(pop_size[year == "2020"])) %>% 
+  mutate(pop_size_diff = pop_size_2020-pop_size_1920) %>% 
+  top_n(5) %>% 
+  arrange(desc(pop_size_diff))
+population_growth_tidy
+```
+
+7. (4 points) Produce a plot that shows the 5 countries that have had the highest population growth over the past 100 years (1920-2020). Which countries appear to have had exponential growth?  
+```{r}
+  population_tidy %>% 
+  group_by(country, year) %>% 
+  filter(between(year, 1920, 2020)) %>% 
+  filter(country == "India" | country == "China" | country == "Indonesia" | country == "United States" | country == "Pakistan") %>% 
+  ggplot(aes(x=year, y=pop_size, color=country, group=country))+
+  geom_line()+
+   scale_x_discrete(breaks=c("1920","1945","1970","1995","2020"),
+        labels=c("1920","1945","1970","1995","2020"))+
+  theme(plot.title = element_text(size = rel(1), hjust = 0.5))+
+  theme(axis.text.x = element_text(hjust = 0.5))+
+  labs(title="Population Top 5 Fastest Growing Countries:1920-2020", 
+       x="Population Size",
+       y="Country")
+```
+
+## Income
+The units used for income are gross domestic product per person adjusted for differences in purchasing power in international dollars.
+```{r}
+income_tidy
+```
+
+8. (4 points) As in the previous questions, which countries have experienced the biggest growth in per person GDP. Show this as a table and then plot the changes for the top 5 countries. With a bit of research, you should be able to explain the dramatic downturns of the wealthiest economies that occurred during the 1980's.
+```{r}
+income_growth_tidy <- income_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>%
+  summarize(income_1920 = mean(dollars[year == "1920"]),
+            income_2020 = mean(dollars[year == "2020"])) %>% 
+  mutate(income_diff = income_2020-income_1920) %>% 
+  top_n(5) %>% 
+  arrange(desc(income_diff))
+income_growth_tidy
+```
+
+
+```{r}
+income_tidy %>% 
+  group_by(country) %>% 
+  filter(between(year, 1920, 2020)) %>%
+  filter(country == "Qatar" | country == "Luxembourg" | country == "Singapore" | country == "Brunei" | country == "Ireland") %>% 
+  ggplot(aes(x=year, y=dollars, color=country, group=country, shape=country))+
+  geom_line()+
+  scale_x_discrete(breaks=c("1920","1945","1970","1995","2020"),
+        labels=c("1920","1945","1970","1995","2020"))+
+  theme(plot.title = element_text(size = rel(1), hjust = 0.5))+
+  theme(axis.text.x = element_text(hjust = 0.5))+
+  labs(title="GDP Per Person of Countries with Most Economic Growth:1920-2020",
+       x="Year",
+       y="GDP Per Person (dollars)")
+```
+9. (3 points) Create three new objects that restrict each data set (life expectancy, population, income) to the years 1920-2020. Hint: I suggest doing this with the long form of your data. Once this is done, merge all three data sets using the code I provide below. You may need to adjust the code depending on how you have named your objects. I called mine `life_expectancy_100`, `population_100`, and `income_100`. For some of you, learning these `joins` will be important for your project.  
+
+```{r}
+life_expectancy_100 <- life_expectancy_tidy %>% 
+  filter(between(year, 1920, 2020))
+life_expectancy_100  
+```
+
+population_100
+```{r}
+population_100 <- population_tidy %>% 
+  filter(between(year, 1920, 2020))
+population_100
+```
+
+income_100
+```{r}
+income_100 <- income_tidy %>% 
+  filter(between(year, 1920, 2020))
+income_100
+```
+
+```{r}
+gapminder_join <- inner_join(life_expectancy_100, population_100, by= c("country", "year"))
+gapminder_join <- inner_join(gapminder_join, income_100, by= c("country", "year"))
+gapminder_join
+```
+
+10. (4 points) Use the joined data to perform an analysis of your choice. The analysis should include a comparison between two or more of the variables `life_expectancy`, `population`, or `income.` Change in GDP per capita against change in life expectancy for United States over past 100 years.
+
+```{r}
+gapminder_join %>% 
+  filter(country == "United States" | country == "China" | country == "India") %>% 
+  ggplot(aes(x=life_exp, y=dollars, color=country, shape=country))+
+  geom_point()+
+  geom_point(size=0.5)+
+  theme_linedraw()+
+  geom_smooth(method="lm", se=FALSE)+
+  theme(plot.title = element_text(size = rel(1), hjust = 0.5))+
+  theme(axis.text.x = element_text(hjust = 0.5))+
+  theme(axis.text.x = element_blank(), axis.ticks = element_blank())+
+  labs(title="GDP Per Person and Life Expectancy: 1920-2020",
+       x="Life Expectancy",
+       y="GDP Per Person (dollars)")
+```
