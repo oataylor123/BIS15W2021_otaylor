@@ -564,7 +564,7 @@ summary {
 ## #   `1902` &lt;dbl&gt;, `1903` &lt;dbl&gt;, `1904` &lt;dbl&gt;, `1905` &lt;dbl&gt;, `1906` &lt;dbl&gt;,
 ## #   `1907` &lt;dbl&gt;, `1908` &lt;dbl&gt;, `1909` &lt;dbl&gt;, …</code></pre>
 <ol style="list-style-type: decimal">
-<li></li>
+<li>NAs have not been removed from the data; it may be that countries that failed to record data for the earlier years included because they had relatively low life expectancies and possibly low income per person. Excluding in our calculations would produce an inaccurate anaylysis of the data.</li>
 </ol>
 <pre class="r"><code>population_tidy &lt;- population %&gt;% 
   pivot_longer(-country,
@@ -658,37 +658,37 @@ life_expectancy_tidy</code></pre>
 ## # … with 185 more rows</code></pre>
 <p>Population data has 195 countries.</p>
 <pre class="r"><code>income_tidy %&gt;% 
-  count(country, sort =T, na.rm=T)</code></pre>
-<pre><code>## # A tibble: 193 x 3
-##    country             na.rm     n
-##    &lt;chr&gt;               &lt;lgl&gt; &lt;int&gt;
-##  1 Afghanistan         TRUE    241
-##  2 Albania             TRUE    241
-##  3 Algeria             TRUE    241
-##  4 Andorra             TRUE    241
-##  5 Angola              TRUE    241
-##  6 Antigua and Barbuda TRUE    241
-##  7 Argentina           TRUE    241
-##  8 Armenia             TRUE    241
-##  9 Australia           TRUE    241
-## 10 Austria             TRUE    241
+  count(country, sort =T)</code></pre>
+<pre><code>## # A tibble: 193 x 2
+##    country                 n
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 Afghanistan           241
+##  2 Albania               241
+##  3 Algeria               241
+##  4 Andorra               241
+##  5 Angola                241
+##  6 Antigua and Barbuda   241
+##  7 Argentina             241
+##  8 Armenia               241
+##  9 Australia             241
+## 10 Austria               241
 ## # … with 183 more rows</code></pre>
 <p>Income data has 193 countries.</p>
 <pre class="r"><code>life_expectancy_tidy %&gt;% 
-  count(country, sort=T, na.rm=T)</code></pre>
-<pre><code>## # A tibble: 187 x 3
-##    country             na.rm     n
-##    &lt;chr&gt;               &lt;lgl&gt; &lt;int&gt;
-##  1 Afghanistan         TRUE    301
-##  2 Albania             TRUE    301
-##  3 Algeria             TRUE    301
-##  4 Andorra             TRUE    301
-##  5 Angola              TRUE    301
-##  6 Antigua and Barbuda TRUE    301
-##  7 Argentina           TRUE    301
-##  8 Armenia             TRUE    301
-##  9 Australia           TRUE    301
-## 10 Austria             TRUE    301
+  count(country, sort=T)</code></pre>
+<pre><code>## # A tibble: 187 x 2
+##    country                 n
+##    &lt;chr&gt;               &lt;int&gt;
+##  1 Afghanistan           301
+##  2 Albania               301
+##  3 Algeria               301
+##  4 Andorra               301
+##  5 Angola                301
+##  6 Antigua and Barbuda   301
+##  7 Argentina             301
+##  8 Armenia               301
+##  9 Australia             301
+## 10 Austria               301
 ## # … with 177 more rows</code></pre>
 <p>Life expectancy data has 187 countries. ## Life Expectancy</p>
 <ol start="3" style="list-style-type: decimal">
