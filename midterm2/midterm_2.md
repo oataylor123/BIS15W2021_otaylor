@@ -240,7 +240,7 @@ life_expectancy
 ## #   `1902` <dbl>, `1903` <dbl>, `1904` <dbl>, `1905` <dbl>, `1906` <dbl>,
 ## #   `1907` <dbl>, `1908` <dbl>, `1909` <dbl>, …
 ```
-1. 
+1. NAs have not been removed from the data; it may be that countries that failed to record data for the earlier years included because they had relatively low life expectancies and possibly low income per person. Excluding in our calculations would produce an inaccurate anaylysis of the data.
 
 
 ```r
@@ -376,46 +376,46 @@ Population data has 195 countries.
 
 ```r
 income_tidy %>% 
-  count(country, sort =T, na.rm=T)
+  count(country, sort =T)
 ```
 
 ```
-## # A tibble: 193 x 3
-##    country             na.rm     n
-##    <chr>               <lgl> <int>
-##  1 Afghanistan         TRUE    241
-##  2 Albania             TRUE    241
-##  3 Algeria             TRUE    241
-##  4 Andorra             TRUE    241
-##  5 Angola              TRUE    241
-##  6 Antigua and Barbuda TRUE    241
-##  7 Argentina           TRUE    241
-##  8 Armenia             TRUE    241
-##  9 Australia           TRUE    241
-## 10 Austria             TRUE    241
+## # A tibble: 193 x 2
+##    country                 n
+##    <chr>               <int>
+##  1 Afghanistan           241
+##  2 Albania               241
+##  3 Algeria               241
+##  4 Andorra               241
+##  5 Angola                241
+##  6 Antigua and Barbuda   241
+##  7 Argentina             241
+##  8 Armenia               241
+##  9 Australia             241
+## 10 Austria               241
 ## # … with 183 more rows
 ```
 Income data has 193 countries.
 
 ```r
 life_expectancy_tidy %>% 
-  count(country, sort=T, na.rm=T)
+  count(country, sort=T)
 ```
 
 ```
-## # A tibble: 187 x 3
-##    country             na.rm     n
-##    <chr>               <lgl> <int>
-##  1 Afghanistan         TRUE    301
-##  2 Albania             TRUE    301
-##  3 Algeria             TRUE    301
-##  4 Andorra             TRUE    301
-##  5 Angola              TRUE    301
-##  6 Antigua and Barbuda TRUE    301
-##  7 Argentina           TRUE    301
-##  8 Armenia             TRUE    301
-##  9 Australia           TRUE    301
-## 10 Austria             TRUE    301
+## # A tibble: 187 x 2
+##    country                 n
+##    <chr>               <int>
+##  1 Afghanistan           301
+##  2 Albania               301
+##  3 Algeria               301
+##  4 Andorra               301
+##  5 Angola                301
+##  6 Antigua and Barbuda   301
+##  7 Argentina             301
+##  8 Armenia               301
+##  9 Australia             301
+## 10 Austria               301
 ## # … with 177 more rows
 ```
 Life expectancy data has 187 countries. 
