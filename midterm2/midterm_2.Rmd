@@ -47,7 +47,7 @@ income
 life_expectancy <- read_csv(here("midterm2", "data", "life_expectancy_years.csv"))
 life_expectancy
 ```
-1. 
+1. NAs have not been removed from the data; it may be that countries that failed to record data for the earlier years included because they had relatively low life expectancies and possibly low income per person. Excluding in our calculations would produce an inaccurate anaylysis of the data.
 
 ```{r}
 population_tidy <- population %>% 
@@ -90,12 +90,12 @@ population_tidy %>%
 Population data has 195 countries.
 ```{r}
 income_tidy %>% 
-  count(country, sort =T, na.rm=T)
+  count(country, sort =T)
 ```
 Income data has 193 countries.
 ```{r}
 life_expectancy_tidy %>% 
-  count(country, sort=T, na.rm=T)
+  count(country, sort=T)
 ```
 Life expectancy data has 187 countries. 
 ## Life Expectancy  
