@@ -29,7 +29,6 @@ ui <- dashboardPage(
   dashboardHeader(title = "BIS2C Grade"),
   dashboardSidebar(
     sidebarMenu(
-       menuItem("Playposit", tabName = "Playposit", icon = icon("tree")),
       menuItem("Quiz", tabName = "Quiz", icon = icon("tree")),
       menuItem("Lab", tabName = "Lab", icon = icon("tree")),
       menuItem("Lab Practical & Final", tabName = "Lab Practical & Final", icon = icon("tree")),
@@ -38,12 +37,109 @@ ui <- dashboardPage(
   ),
   dashboardBody(
     tabItems(
-      tabItem("Quiz"),
-      tabItem("Lab")
-             
-     )
+      tabItem("Quiz",
+              h1(sliderInput("Quiz 1", "Quiz 1:",
+                             min = 0,
+                             max = 75,
+                             value = 40),
+                 sliderInput("Quiz 2", "Quiz 2:",
+                             min = 0,
+                             max = 75,
+                             value = 40),
+                 sliderInput("Quiz 3", "Quiz 3:",
+                             min = 0,
+                             max = 75,
+                             value = 40),
+                 sliderInput("Syllabus Quiz", "Syllabus Quiz:",
+                             min = 0,
+                             max = 5,
+                             value = 5)
+                 )),
+      
+       tabItem("Lab",
+               h2(sliderInput("Prelab 1", "PreLab 1:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 1", "Postlab 1:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 2", "PreLab 2:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 2", "Postlab 2:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 3", "PreLab 3:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 3", "Postlab 3:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 4", "PreLab 4:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 4", "Postlab 4:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 5", "PreLab 5:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 5", "Postlab 5:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 6", "PreLab 6:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 6", "Postlab 6:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 7", "PreLab 7:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 7", "Postlab 7:",
+                              min = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Prelab 8", "PreLab 8:",
+                              min  = 0,
+                              max = 5,
+                              value = 5),
+                  sliderInput("Postlab 8", "Postlab 8:",
+                              min = 0,
+                              max = 5,
+                              value = 5)
+               )),
+                  
+      tabItem("Lab Practical & Final",
+              h3(sliderInput("Final", "Final:",
+                             min = 0,
+                             max = 125,
+                             value = 75),
+                 sliderInput("Lab Practical", "Lab Practical:",
+                             min = 0,
+                             max = 45,
+                             value = 25)
+                 )),
+      tabItem("Total")
+    )
   )
 )
+      
+
+    
 
 server <- function(input, output){
   
