@@ -1,0 +1,53 @@
+---
+title: "rshiny app rough"
+author: "Olivia Taylor"
+date: "2/28/2021"
+output: 
+  html_document: 
+    keep_md: yes
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r, echo=FALSE}
+library(shiny)
+library(shinydashboard)
+library(tidyverse)
+```
+
+```{r}
+ui <- dashboardPage(
+  dashboardHeader(title = "BIS2C Grade"),
+  dashboardSidebar(
+    sidebarMenu(
+       menuItem("Playposit", tabName = "Playposit", icon = icon("tree")),
+      menuItem("Quiz", tabName = "Quiz", icon = icon("tree")),
+      menuItem("Lab", tabName = "Lab", icon = icon("tree")),
+      menuItem("Lab Practical & Final", tabName = "Lab Practical & Final", icon = icon("tree")),
+        menuItem("Total", tabName = "Total", icon = icon("tree"))
+    )
+  ),
+  dashboardBody(
+    tabItems(
+      tabItem("Quiz"),
+      tabItem("Lab")
+             
+     )
+  )
+)
+
+server <- function(input, output){
+  
+}
+
+shinyApp(ui, server)
+```
