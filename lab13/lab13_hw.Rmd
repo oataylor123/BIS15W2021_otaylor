@@ -6,6 +6,7 @@ output:
   html_document: 
     theme: spacelab
     keep_md: yes
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
@@ -89,7 +90,12 @@ server <- function(input, output, session){
 }
 shinyApp(ui, server)
 ```
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 
+## the data for Asian group wasn't showing on app, "asian" need to be changed to "Asian"
 **3. Make alternate version of your app above by tracking enrollment at a campus over all of the represented years while allowing users to interact with campus, category, and ethnicity.**
 ```{r}
 ui <- dashboardPage(
@@ -126,6 +132,7 @@ server <- function(input, output, session){
 }
 shinyApp(ui, server)
 ```
+</div>
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
