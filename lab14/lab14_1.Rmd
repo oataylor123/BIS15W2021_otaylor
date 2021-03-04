@@ -85,6 +85,16 @@ data1
 data(iris)                          # Loading data frame
 head(iris)                          # Head of example data
 iris1 <- iris                       # Replicate example data
+
+i <- 1
+repeat{
+  iris1[ ,i] <- iris1[ ,i]*10
+  i <- i+1
+  if(!is.numeric(iris1[ ,i])){
+    break
+  }
+  head(iris1)
+  }
 ```
 
 ## While-Loops
@@ -120,9 +130,20 @@ data2
 ```
 
 ### Practice: Please write a while loop to change all numeric data from in centimeters to millimeters.
+
+
+
 ```{r}
 head(iris)                                        # Showing head of data in RStudio console
-iris2 <- iris                                     # Replicate example data
+iris2 <- iris
+iris2
+i <- 1
+while(i <= 2) {
+  iris2[ ,i] <- iris2[ ,i]*10
+  i <- i+1
+  
+  }
+iris2
 ```
 
 ## For-Loops
@@ -156,7 +177,19 @@ data3
 ### Practice 1: Please write a for loop to change only width data from in centimeters to millimeters.
 ```{r}                                                 
 head(iris)                                             # Inspecting iris flower data set
-iris3 <- iris                                          # Replicate iris data set
+iris3 <- iris 
+iris3
+for(i in 2:4 ) {
+  iris3[ ,i] <- iris3[ ,i]*10
+}
+head(iris3)
+
+for(i in 1:ncol(iris3)){
+  if(str_detect(colnames(iris3)[i], "width")){
+     iris3[ ,i] <- iris3[ ,i]*10
+  }
+}
+head(iris3)
 ```
 
 ### example 2: Looping over files
@@ -185,6 +218,14 @@ results
 # Start by creating an empty data frame
 results <- data.frame(file_name = vector(mode = "character", length = length(data_files)),
                       count = vector(mode = "integer", length = length(data_files)))
+
+for (i in 1:length(data_files)){
+  data0 <- read_csv(data_files[i])
+  count <- nrow(data0)
+  results$file_name[i] <- data_files[i]
+  results$count[i] <- count
+}
+results
 ```
 
 ### example 3: Looping over files for ggplot
@@ -202,18 +243,41 @@ for (i in 1:length(data_files3)){
       labs(title = data_files3[i], x = "longitude", y = "latitude")
   )
 }
+
+data_list <- lapply(data_files3, read_csv)
+collar_data_all <- bind_rows(data_list)
+collar_data_all %>% 
+  summarize(max_lat=max(lat),
+            min_lat=min(lat),
+            max_long=max(long),
+            min_long=min(long))
+lat <- c(14.91539	, 31.56526)
+long <- c(122.0874, 134.9906)
+bbox <- make_bbox(long, lat, f = 0.5)
+map <- get_map(bbox, maptype = "terrain", source = "stamen")
+ggmap(map)
+
+for (i in 1:length(data_files3)){
+  data0 <- as.data.frame(read_csv(data_files3[i]))
+  print(
+    ggmap(map)+
+      geom_path(data = data0, aes(long, lat))+
+      geom_point(data = data0, aes(long, lat))+
+      labs(title = data_files3[i], x ="longitude", y ="latitude")
+  )
+}
 # how to show them on a map?
 ```
 
 ### example 4: Looping over files for basic genetic analysis
 [Bioconductor](https://www.bioconductor.org/) project is an open source software repository that hosts a wide range of statistical tools developed in the R programming environment. Please use standard R installation procedures to install the BiocManager package and then install "ShortRead" and "Biostrings". 
 ```{r message=FALSE, warning=FALSE}
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#     install.packages("BiocManager")
-# BiocManager::install()                            # To install core packages or update installed packages
-# BiocManager::install(c("ShortRead", "Biostrings"))# Install specific packages
-library(ShortRead)
-library(Biostrings)
+ #if (!requireNamespace("BiocManager", quietly = TRUE))
+     #install.packages("BiocManager")
+ #BiocManager::install()                            # To install core packages or update installed packages
+ #BiocManager::install(c("ShortRead", "Biostrings"))# Install specific packages
+#library(ShortRead)
+#library(Biostrings)
 ```
 
 The data is downloaded from [PATRIC, BACTERIAL BIOINFORMATICS RESOURCE CENTER](https://patricbrc.org/)
@@ -233,6 +297,16 @@ data_files2
 
 GC_results <- data.frame(file_name = vector(mode = "character", length = length(data_files2)),
                          gc_content = vector(mode = "integer", length = length(data_files2)))
+
+for (i in 1:length(data_files2)){
+  reads <- readFasta("data/archaea-dna", data_files2[i])
+  seq <- sread(reads)
+  base_freq <- alphabetFrequency(seq)
+  gc_content <- (base_freq[1, "G"] + base_freq[1, "C"]) / sum(base_freq) * 100
+  GC_results$file_name[i] <- data_files2[i]
+  GC_results$gc_content[i] <- gc_content
+}
+GC_results
 ```
 
 ## Packages for next time  
