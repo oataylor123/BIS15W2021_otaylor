@@ -1,49 +1,40 @@
-## Syllabus
-quizWorth = rep(15, 8); names(quizWorth) = paste("Q", 1:8, sep="")
-hwWorth = rep(25, 5); names(hwWorth) = paste("HW", 1:5, sep="")
-examWorth = c(rep(100, 2), 125); names(examWorth) = c(paste("Exam", 1:2, sep=""), "Final")
-cpWorth = 15; names(cpWorth) = "CP" # class participation
-cutoff = c(0, 60, 70, 80, 90, 100)
-chronLabel = c("Q1", "HW1", "Q2", "HW2", "Q3", "Exam1", 
-               "Q4", "Q5", "HW3", "Q6", "HW4", "Exam2",
-               "Q7", "Q8", "HW5", "Final", "CP")
 
-worth_chron = c(quizWorth, hwWorth, examWorth, cpWorth)[match(chronLabel, names(c(quizWorth, hwWorth, examWorth, cpWorth)))]
+quizWorth = rep(5, 10); names(quizWorth) = paste("Q", 1:10, sep="")
+labWorth = rep(15, 8); names(labWorth) = paste("LAB", 1:8, sep="")
+labpresentationWorth = rep(5, 2); names(labpresentationWorth) = paste("LAB PRESENTATION", 4:5, sep="")
+labpresentation8Worth = 15; names(labpresentation8Worth) = paste("LAB PRESENTATION")
+labpracticalWorth = 45; names(labpracticalWorth) = "LABPRACTICAL"
+midtermWorth = rep(3, 90); names(midtermWorth) = "MIDTERM"
+cutoff = c(0, 60, 70, 80, 90, 100)
+chronLabel = c("Q1", "LAB1", "Q2", "LAB2", "Q3",  "LAB3", "MIDTERM1",
+               "Q4", "LAB4", "LAB4PRESENTATION", "LAB5", "LAB5PRESENTATION", "Q5", "LAB6", "Q6", "MIDTERM2", "LAB7", "Q7"
+,                "LAB8", "LAB8PRESENTATION","Q8", "LABPRACTICAL", "MIDTERM3")
+
+worth_chron = c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth)[match(chronLabel, names(c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)))]
 worthCumsum_chron = cumsum(worth_chron)
 
-# ## Sample grades
-# quizGrade = c(10.5, 15, 11, 12, 13, 8, 9, 15); names(quizGrade) = paste("Q", 1:8, sep="")
-# hwGrade = c(23, 24, 22, 21.5, 25); names(hwGrade) = paste("HW", 1:5, sep="")
-# examGrade = c(80, 90.5, 110); names(examGrade) = c(paste("Exam", 1:2, sep=""), "Final")
-# cpGrade = 15; names(cpGrade) = "CP"
-# # Sample grades with missing value
-# quizGrade = c(10.5); names(quizGrade) = paste("Q", 1, sep="")
-# hwGrade = c(23); names(hwGrade) = paste("HW", 1, sep="")
-# examGrade = c()
-# cpGrade = c()
+
 
 ## Plot function
 # Un-adjusted
-PlotGrades = function(quizGrade, hwGrade, examGrade, cpGrade){
+PlotGrades = function(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth){
     ### ====
-    # Given the three vectors: quiz grades, hw grades, exam grades, and participation grade,
+    # Given the three vectors: quiz grades, pl grades, lab grades, and participation grade,
     # plot the un-adjusted individual and cumulative percentages as times series.
     # 
-    # Input:
-    #    quizGrade, hwGrade, examGrade, cpGrade: grade vectors with names
+    # 
+    # 
     ### ====
     
     ## Process the grades for plotting
     # Rearrage the grades in chronological order (same as <assignment_label>) 
-    orderInd = match(chronLabel, names(c(quizGrade, hwGrade, examGrade, cpGrade)))
+    orderInd = match(chronLabel, names(c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)))
     orderInd = orderInd[!is.na(orderInd)] # If the grades are not complete (say in the middle of the semester), the grades of the assignments yet assigned are NA
-    grade_chron = c(quizGrade, hwGrade, examGrade, cpGrade)[orderInd]
-    #grade_chron = c(quizGrade, hwGrade, examGrade)[match(chronLabel, names(c(quizGrade, hwGrade, examGrade)))]
+    grade_chron = c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)[orderInd]
     gradePct_chron = grade_chron / worth_chron[1:length(grade_chron)] * 100
     # Cumulative sum of the grades
     gradeCumsum_chron = cumsum(grade_chron)
     gradeCumsumPct_chron = gradeCumsum_chron / worthCumsum_chron[1:length(grade_chron)] * 100
-    
     ## Plot grades (individual and cumulative)
     par(mex=1.5, # Axes margins will be twice the normal size (so that y label and ticks won't overlap)
         mar=c(7.1, 4.1, 1, 4.1)) # Add extra space to right of plot area (to leave space for legend)
@@ -63,9 +54,9 @@ PlotGrades = function(quizGrade, hwGrade, examGrade, cpGrade){
     axis(2, at=c(60, 70, 80, 90, 100), labels=c("60 (D)", "70 (C)", "80 (B)", "90 (A)", "100"), las=2)
     box()
     
-    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(yLowLimit, yLowLimit, 90, 90), col="red")
-    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(70, 70, 90, 90), col="lightyellow")
-    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(90, 90, 100, 100), col="lightgreen")
+    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(yLowLimit, yLowLimit, 90, 90), col="purple")
+    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(70, 70, 90, 90), col="pink")
+    polygon(c(1, xLen+0.5, xLen+0.5, 1), c(90, 90, 100, 100), col="grey")
     
     # Add reference lines
     # for(yVal in c(60, 70, 80, 90)){
@@ -90,33 +81,33 @@ PlotGrades = function(quizGrade, hwGrade, examGrade, cpGrade){
 }
 
 # Adjusted
-PlotGrades_adj = function(quizGrade, hwGrade, examGrade, cpGrade){
+PlotGrades_adj = function(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth){
     ### ====
-    # Given the three vectors: quiz grades, hw grades, exam grades and participation grade, 
+    # Given the three vectors: quiz grades, pl grades, lab grades and participation grade, 
     # plot the individual and cumulative percentages as times series.
     #
     # Note:
     #   The adjustment is done retrospectively, meaning if a lower quiz grade occurs later on 
-    #   the pervious cumulative percentages will be recalculated.
+    #   the previous cumulative percentages will be recalculated.
     #
     # Input:
-    #    quizGrade, hwGrade, examGrade, cpGrade: grade vectors with names
+    #    quizGrade, plGrade, labGrade, labpracticalGrade: grade vectors with names
     ### ====
     
-    if(length(c(quizGrade, hwGrade, examGrade, cpGrade)) <= 1){
-        PlotGrades(quizGrade, hwGrade, examGrade, cpGrade)
+    if(length(c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)) <= 1){
+        PlotGrades(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)
     }else{
-        minQuizGrade = min(quizGrade)
+        minLabGrade = min(labGrade)
         
         ## Process the grades for plotting
         # Rearrage the grades in chronological order (same as <assignment_label>) 
-        orderInd = match(chronLabel, names(c(quizGrade, hwGrade, examGrade, cpGrade)))
+        orderInd = match(chronLabel, names(c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)))
         orderInd = orderInd[!is.na(orderInd)] # If the grades are not complete (say in the middle of the semester), the grades of the assignments yet assigned are NA
         # Individual percentages
-        grade_chron = c(quizGrade, hwGrade, examGrade, cpGrade)[orderInd]
+        grade_chron = c(quizWorth,  labWorth,  labpracticalWorth, labpresentationWorth, labpresentation8Worth, midtermWorth)[orderInd]
         gradePct_chron = grade_chron / worth_chron[1:length(grade_chron)] * 100
-        # Cumulative percentages: adjust restrospectively
-        gradeCumsum_chron = c(grade_chron[1], cumsum(grade_chron)[-1] - minQuizGrade)
+        # Cumulative percentages: adjust retrospectively
+        gradeCumsum_chron = c(grade_chron[1], cumsum(grade_chron)[-1] - minLabGrade)
         gradeCumsumPct_chron = gradeCumsum_chron / c(worthCumsum_chron[1], worthCumsum_chron[2:length(grade_chron)] - 15) * 100
         
         ## Plot grades (individual and cumulative)
@@ -177,7 +168,6 @@ AssignLetterGrade = function(gradePct){
         letterGrade = "B"
     }else{
         letterGrade = "A"
-    }
+    }}
     
     return(letterGrade)
-}
